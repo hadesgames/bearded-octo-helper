@@ -22,5 +22,7 @@ class Speach2TextPipe(pipeline.Pipe):
         response = result["hypotheses"][0]["utterance"]
         print response
 
+        os.unlink(fn)
+
         return response
 
