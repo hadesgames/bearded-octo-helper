@@ -1,6 +1,8 @@
 import threading
 import converter
 import speach2text
+import ntext_pipe
+import hands_pipe
 
 
 def run(rec):
@@ -21,7 +23,9 @@ class ProcessorThread(threading.Thread):
         return [
                 converter.RawToWavPipe(self.rec),
                 converter.WavToFlacPipe(),
-                speach2text.Speach2TextPipe(self.rec)
+                speach2text.Speach2TextPipe(self.rec),
+                ntext_pipe.NTextPipe(),
+                hands_pipe.HandsPipe()
         ]
 
     def run(self):
