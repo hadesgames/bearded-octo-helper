@@ -1,6 +1,7 @@
 import pipeline
 import urllib2
 import json
+import os
 
 
 class Speach2TextPipe(pipeline.Pipe):
