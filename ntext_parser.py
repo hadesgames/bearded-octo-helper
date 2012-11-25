@@ -40,7 +40,7 @@ def is_verb(item):
     return begin_tag == "VB"
 def is_conjunction(item):
     begin_tag = item[1]
-    return begin_tag == "IN"
+    return begin_tag == "IN" or begin_tag == "TO"
 def is_number(item):
     tag = item[1]
     return tag == "CD"
@@ -50,7 +50,12 @@ def is_article(item):
 def is_and(item):
     tag = item[1]
     return tag == "CC"
-
+def is_adjective(item):
+    tag = item[1]
+    return tag == "JJ"
+def is_to(item):
+    tag = item[1]
+    return tag == "TO"
 #A stream class. Used to stream tokens in and read them one by one
 class TokenStream(object):
     #Ls is a list
@@ -92,13 +97,13 @@ class TokenStream(object):
         if not is_verb(verb):
             raise Exception("Verb expected at %s" % (self.position-1))
         return verb
-    #Do I want to write a noun/adjective one?....
+    #Do I want to write a noun/adjective one?....YES I DO
     def read_noun_sequence(self):
         read = list()
         while not self.is_eos():
             if is_article(self.lookahead(0)):
                 self.skip_articles()
-            elif is_noun(self.lookahead(0)):
+            elif is_noun(self.lookahead(0)) or is_adjective(self.lookahead(0)):
                 read.append(self.read_token()[0])
             else:
                 break
@@ -145,6 +150,13 @@ def parse_with_subordinate(stream):
     sentence.val = read
     return sentence
 
+def parse_to_subordinate(stream):
+    read = stream.read_sequence()
+    sentence = Sentence()
+    sentence.type = "to"
+    sentence.val = read
+    return sentence
+
 #Chooses wich subordinate super-type to use based on the conjunction
 def parse_subordinate(stream):
     #Read the conjunction (past token)
@@ -153,6 +165,8 @@ def parse_subordinate(stream):
         return parse_at_subordinate(stream)
     elif conjunction == "with":
         return parse_with_subordinate(stream)
+    elif conjunction == "to":
+        return parse_to_subordinate(stream)
     else:
         raise Exception("Unknown subordinate connector %s" %(conjunction))
 
@@ -161,7 +175,7 @@ def parse_subject_object_verb(stream,subject=None):
         subj = stream.read_noun()
     else:
         subj = subject
-    verb = stream.read_verb()
+    verb = stream.read_token()#stream.read_verb()
     obj =  stream.read_noun_sequence()
     sentence = Sentence()
     sentence.type = "svo"
