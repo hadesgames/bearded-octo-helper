@@ -7,14 +7,6 @@ dictd = 'test.dict'
 
 import pocketsphinx as ps
 
-rec = ps.Decoder(hmm=hmmd, lm=lmd, dict=dictd, samprate='16000', jsgf="test.jsgf")
-fh = open("test2.wav", "rb")
-fh.seek(44)
-
-rec.decode_raw(fh)
-
-print rec.get_hyp()
-
 
 class SphinxPipe(pipeline.Pipe):
     def process(self, filename):
