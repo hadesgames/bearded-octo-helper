@@ -3,6 +3,8 @@ import converter
 import speach2text
 import ntext_pipe
 import hands_pipe
+import utils
+import sphinx
 
 
 def run(rec):
@@ -22,10 +24,12 @@ class ProcessorThread(threading.Thread):
     def create_pipeline(self):
         return [
                 converter.RawToWavPipe(self.rec),
-                converter.WavToFlacPipe(),
-                speach2text.Speach2TextPipe(self.rec),
-                ntext_pipe.NTextPipe(),
-                hands_pipe.HandsPipe()
+                sphinx.SphinxPipe(),
+                #converter.WavToFlacPipe(),
+                #speach2text.Speach2TextPipe(self.rec),
+                #ntext_pipe.NTextPipe(),
+                #hands_pipe.HandsPipe()
+                utils.DebugPipe()
         ]
 
     def run(self):

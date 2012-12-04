@@ -1,0 +1,7 @@
+#JSGF V1.0;
+
+grammar basicCmd;
+public <basicCmd> = <command>;
+<command> = <action> <object>;
+<action> = /10/ OPEN | /20/ CLOSE ;
+<object> = [THE | A] (WINDOW | FILE | MENU | TERM | /5/ TERMINAL);
