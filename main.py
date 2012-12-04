@@ -20,10 +20,8 @@ def main():
     processorThread = processor.run(rec)
 
     rec.start()
-    rec.record(5)
+    rec.record(3)
     rec.stop()
-
-
 
 
 if __name__ == "__main__":

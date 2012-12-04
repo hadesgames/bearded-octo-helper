@@ -2,6 +2,6 @@
 
 grammar basicCmd;
 public <basicCmd> = <command>;
-<command> = <action> <object>;
+<command> = <action> <object> <NULL>;
 <action> = /10/ OPEN | /20/ CLOSE ;
 <object> = [THE | A] (WINDOW | FILE | MENU | TERM | /5/ TERMINAL);

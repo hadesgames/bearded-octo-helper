@@ -5,8 +5,8 @@ import Queue
 class Recorder:
     def __init__(self,
             format=pyaudio.paInt16,
-            channels=2,
-            rate=44100,
+            channels=1,
+            rate=16000,
             frames_per_buffer=1024,
             chunk=1024):
         self.pyaudio = pyaudio.PyAudio()
