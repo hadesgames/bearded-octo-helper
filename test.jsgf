@@ -3,5 +3,5 @@
 grammar basicCmd;
 public <basicCmd> = <command>;
 <command> = <action> <object> <NULL>;
-<action> = /10/ OPEN | /20/ CLOSE ;
+<action> = /10/ OPEN {open} | /20/ CLOSE {close};
 <object> = [THE | A] (WINDOW | FILE | MENU | TERM | /5/ TERMINAL);
